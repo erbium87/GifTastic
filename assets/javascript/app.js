@@ -1,7 +1,7 @@
 //look at movies-button-layout for html assistance of layout maybe(will help with classes/ids)
 $(document).ready(function() {
 
-var animals = ["cat", "bird", "rat", "dog"];
+var animals = ["cat", "bird", "rat", "dog", "goat", "donkey", "chicken", "pig"];
 // var APIKey = "dc6zaTOxFJmzC";
 
 $(document).on("click", ".animal", function() {
@@ -39,12 +39,14 @@ $(document).on("click", ".animal", function() {
               gif.attr("data-value", "still");
               // gif.attr("src", animalResult[i].images.original.url);
               //attr for motion gif
-              animalDiv.append(p);
               animalDiv.append(gif);
+              animalDiv.append(p);
               $("#animals-here").append(animalDiv);
 
               
             }
+
+          }
             $(".gifMotion").on("click", function(){
               var state = $(this).attr("data-value");
               console.log(this);
@@ -58,17 +60,15 @@ $(document).on("click", ".animal", function() {
                     animalDiv.append(gif);
                     $("#animals-here").append(gif);
                 }
-                // else  {
-                //     $(this).attr("src", $(this).data("still"));
-                //     $(this).attr("data-value", "still");
-                //     // animalDiv.append(gif);
-                //     // $("#animals-here").append(gif);
+                else if (state === "animate")  {
+                    $(this).attr("src", $(this).data("still"));
+                    $(this).attr("data-value", "still");
+                    animalDiv.append(gif);
+                    $("#animals-here").append(gif);
 
-                // }
+                }
 
               });
-
-          }
           // $("#animalsGif").html(JSON.stringify(response));
           renderButtons();
         });
@@ -79,7 +79,7 @@ function renderButtons(){
     $("#animals-view").empty();
   
    for (var i = 0; i < animals.length; i++) {
-          var a = $("<button>");
+          var a = $("<button class='btn btn-primary'>");
           a.addClass("animal");
           a.attr("data-value", animals[i]);
           a.text(animals[i]);
@@ -90,8 +90,9 @@ function renderButtons(){
 $("#add-animal").on("click", function(event) {
 
   event.preventDefault();
-  var userInput = $("#animal-input").val().trim();
+  var userInput = $("#animal-input").val().trim().toLowerCase();
     animals.push(userInput);
+
 
   renderButtons();
 });
