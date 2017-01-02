@@ -27,23 +27,47 @@ $(document).on("click", ".animal", function() {
               var animalRating = animalResult[i].rating;
               var p = $("<p>").text("Rating: " + animalRating);
               var gif = $("<img>");
-              gif.addClass("still");
+
+              var motionGif = animalResult[i].images.original.url;//testing out to see if works as a variable
+              var stillGif = animalResult[i].images.original_still.url;
+
+              gif.addClass("gifMotion");
               gif.attr("src", animalResult[i].images.original_still.url);
-              //moving image is this but images.original.url
+              //this above works but seeing if variable will work
+              gif.attr("data-still", stillGif);
+              gif.attr("data-animate", motionGif);
+              gif.attr("data-value", "still");
+              // gif.attr("src", animalResult[i].images.original.url);
+              //attr for motion gif
               animalDiv.append(p);
               animalDiv.append(gif);
               $("#animals-here").append(animalDiv);
-              
-              $("button").on("click", function(){
-                if (gif === $(".still")) {
-                    gif.addClass("move");
-                    gif.attr("src", animalResult[i].images.original.url);
-                    animalDiv.append(gif);
-                }
 
-              });
               
             }
+            $(".gifMotion").on("click", function(){
+              var state = $(this).attr("data-value");
+              console.log(this);
+                if (state === "still") {
+                    // gif.attr("src", animalResult[i].images.original.url);
+                    // gif.attr("src", motionGif);
+                    $(this).attr("src", $(this).data("animate"));
+                    // $(this).attr("src", motionGif);
+                    // gif.attr("data-value", "motion");
+                    $(this).attr("data-value", "animate");
+                    animalDiv.append(gif);
+                    $("#animals-here").append(gif);
+                }
+                // else  {
+                //     $(this).attr("src", $(this).data("still"));
+                //     $(this).attr("data-value", "still");
+                //     // animalDiv.append(gif);
+                //     // $("#animals-here").append(gif);
+
+                // }
+
+              });
+
           }
           // $("#animalsGif").html(JSON.stringify(response));
           renderButtons();
@@ -57,7 +81,7 @@ function renderButtons(){
    for (var i = 0; i < animals.length; i++) {
           var a = $("<button>");
           a.addClass("animal");
-          a.attr("data-value", animals[i]);//is it really adding this to every button? how to access it later
+          a.attr("data-value", animals[i]);
           a.text(animals[i]);
           $("#animals-view").append(a); 
         }
