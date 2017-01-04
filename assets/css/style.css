@@ -10,11 +10,12 @@ p {
 	padding: 10px;
 }
 
-img {
-	height: 200px;
-	width: 25%;
+.animal-Gif {
+	display: inline-block;
+  /*float: left;*/
+  margin: 5px;
 }
 
-.animal-Gif {
-	padding-right: 0px;
+#animals-here {
+  width: 65%;
 }
